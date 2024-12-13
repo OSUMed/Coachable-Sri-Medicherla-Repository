@@ -1,0 +1,34 @@
+class Solution:
+    def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root:
+            return []
+
+        traversalLeftToRight = True
+        zigZagTraversal = []
+        queue = collections.deque([root])
+
+        # enter the queue
+        while queue:
+
+            # iterate for that level only
+            subList = collections.deque()
+            for i in range(len(queue)):
+
+                # process node:
+                node = queue.popleft()
+                if traversalLeftToRight:
+                    subList.append(node.val)
+                else:
+                    subList.appendleft(node.val)
+                    print(subList)
+
+                # add the children to the queue:
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+
+            zigZagTraversal.append(list(subList))
+            traversalLeftToRight = not traversalLeftToRight
+            
+        return zigZagTraversal

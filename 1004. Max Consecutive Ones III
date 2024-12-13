@@ -1,0 +1,22 @@
+class Solution:
+    def longestOnes(self, nums: List[int], k: int) -> int:
+        l = 0
+        # a max sequence is a valid sequence: a sequence where it is all ones with up to k zero substitutions
+        maxSequence = 0
+        zeroes = 0
+
+        # Track number of zeroes consumed as we extend the window. Check all valid cases to see if they are the max sequence
+        for r in range(len(nums)):
+            if nums[r] == 0:
+                zeroes += 1
+
+            # Alternate Case: it CAN include a max sequence, but we need to make it a valid sequence first before checking:
+            while zeroes > k:
+                if nums[l] == 0:
+                    zeroes -= 1
+                l += 1
+            
+            # Check all valid sequences if they are max sequence
+            maxSequence = max(r - l + 1, maxSequence)
+
+        return maxSequence

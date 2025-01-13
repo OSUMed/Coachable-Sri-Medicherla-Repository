@@ -1,0 +1,20 @@
+class Solution:
+    def postorder(self,node, globalSum, localSum):
+        # process node: adding to current local sum- scoped because pass by value
+        localSum = localSum*10 + node.val
+
+        # if node is a leaf, we add local sum to global sum
+        if not node.right and not node.left:
+            globalSum[0] += localSum
+            return
+
+        # call the recursions if the neighbors exists
+        if node.left:
+            self.postorder(node.left, globalSum, localSum)
+        if node.right:
+            self.postorder(node.right, globalSum, localSum)
+
+    def sumNumbers(self, root: Optional[TreeNode]) -> int:
+        globalSum = [0]
+        self.postorder(root, globalSum, 0)
+        return globalSum[0]

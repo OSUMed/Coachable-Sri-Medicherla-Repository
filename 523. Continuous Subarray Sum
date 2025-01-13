@@ -1,0 +1,23 @@
+class Solution:
+    def checkSubarraySum(self, nums: List[int], k: int) -> bool:
+        prefixes = {}
+        cumulativeSum = 0
+
+        for ind, num in enumerate(nums):
+            cumulativeSum += num
+            remainder = cumulativeSum % k
+
+            # Case 1: if remainder is in prefix hash, return True*, else add new remainder to hash:
+            if remainder in prefixes:
+                if ind - prefixes[remainder] > 1:
+                    return True
+            
+            else:
+                prefixes[remainder] = ind
+
+            # Case 2: if remainder is 0 and we are past first index, return True
+            if ind > 0 and remainder == 0:
+                return True
+
+        return False
+            

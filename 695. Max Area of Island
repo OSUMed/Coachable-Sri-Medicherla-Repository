@@ -1,0 +1,31 @@
+class Solution:
+    def dfs(self, x, y, grid):
+        # if it is out of bounds, or if it is not an island(sea cell- 0 or sunk cell- "_")
+        if x not in range(len(grid)) or y not in range(len(grid[0])) or grid[x][y] == 0 or grid[x][y] == "_":
+            return 0
+
+        # process node:
+        islandArea = 1
+        grid[x][y] = "_"
+
+        # find area of neighbors recursively in that same island and return it:
+        directions = [(1,0), (0,1), (-1, 0), (0, -1)]
+        for i, j in directions:
+            newx = x + i
+            newy = y + j
+            islandArea += self.dfs(newx, newy, grid)
+        
+        return islandArea
+
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        globalMaxArea = 0
+
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+
+                # if the island is unvisited, we call dfs to find and return its area:
+                if grid[i][j] == 1:
+                    islandArea = self.dfs(i, j, grid)
+                    globalMaxArea = max(islandArea, globalMaxArea)
+        
+        return globalMaxArea

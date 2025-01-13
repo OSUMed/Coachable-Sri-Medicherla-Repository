@@ -1,0 +1,21 @@
+class Solution:
+    def subsetsHelper(self, ind, current, res, arr):
+        # Base case, after out of bounds, add to res:
+        if ind == len(arr):
+            res.append(current.copy())
+            return
+        
+        # pick the index case:
+        current.append(arr[ind])
+        self.subsetsHelper(ind + 1, current, res, arr)
+        current.pop()                                     
+
+
+        # don't pick the index case
+        self.subsetsHelper(ind + 1, current, res, arr)
+
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        self.subsetsHelper(0, [], res, nums)
+        return res
+        

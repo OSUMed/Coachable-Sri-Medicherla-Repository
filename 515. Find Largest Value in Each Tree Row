@@ -1,0 +1,26 @@
+class Solution:
+    def largestValues(self, root: Optional[TreeNode]) -> List[int]:
+        if not root:
+            return []
+    
+        queue = collections.deque([root])
+        maxForLevelArray = []
+        
+        # Iterate using level order traversal and update maxForLevel for each "level"
+        while queue:
+            currLevel = len(queue)
+            maxForLevel = float(-inf)
+
+            # for each level, try updating the maxForLevel variable, after level processed, add it to res:
+            for i in range(currLevel):
+                node = queue.popleft()
+                maxForLevel = max(node.val, maxForLevel)
+
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+                
+            maxForLevelArray.append(maxForLevel)
+        
+        return maxForLevelArray
